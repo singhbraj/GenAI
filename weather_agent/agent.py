@@ -7,10 +7,16 @@ from pydantic import BaseModel, Field
 from typing import Optional
 
 import json
+import os
 
 load_dotenv()
 
 client = OpenAI()
+
+
+def run_command(cmd: str):
+    result = os.system(cmd)
+    return result
 
 
 def get_weather(city:str):
@@ -24,7 +30,8 @@ def get_weather(city:str):
 
 
 available_tools ={
-    "get_weather":get_weather
+    "get_weather":get_weather,
+    "run_command":run_command
 }
 
 
@@ -47,6 +54,7 @@ SYSTEM_PROMPT = """
 
     Available Tools:
     - get_weather(city:str): Takes city name as an input string and retuens the weather info about the city.
+    - run_command(cmd:str): Takes a system linix command as string and executes the command on user's system and returns from that command
 
 
     Example 1: 
