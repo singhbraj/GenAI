@@ -39,10 +39,17 @@ with MongoDBSaver.from_conn_string(DB_URI) as checkpointer:
 
     print("\nAssistant: ", end="", flush=True)
     for msg, metadata in graph.stream(
-        {"messages": ["Hey, What am I learning?"]},
+        {"messages": ["Hey, What is my name?"]},
         config,
         stream_mode="messages"
     ):
         if msg.content and metadata["langgraph_node"] == "chatbot":
             print(msg.content, end="", flush=True)
     print()
+
+    # print full conversation history from checkpoint
+    state = graph.get_state(config)
+    print("\n--- Checkpoint Messages ---")
+    for msg in state.values["messages"]:
+        role = "Human" if msg.type == "human" else "AI"
+        print(f"{role}: {msg.content}")
