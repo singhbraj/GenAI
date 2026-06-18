@@ -1,4 +1,4 @@
-from mem0 import memory
+from mem0 import Memory
 import os
 
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
@@ -21,3 +21,6 @@ config = {
         }
     }
 }
+
+
+mem_client = Memory.from_config(config)
