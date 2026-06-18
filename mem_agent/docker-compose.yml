@@ -1,0 +1,5 @@
+services:
+  valkey:
+    image: qdrant/qdrant
+    ports:
+      - 6379:6379
